@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "repo_version": "0.1.0",
+  "id": "basic-document",
+  "name": "Basic Document",
+  "description": "Minimal Template → Section → Function example for validating the Apex repository and cloning workflow.",
+  "output_pattern": "{{ user.full_name }} - Basic Document.pdf",
+  "template": {
+    "name": "Basic Document Template",
+    "file": "template.jinja"
+  },
+  "sections": [
+    {
+      "name": "Body",
+      "symbol": "body",
+      "file": "sections/body.jinja",
+      "settings": {
+        "content_shape": "paragraphs"
+      },
+      "functions": [
+        {
+          "name": "Heading",
+          "symbol": "heading",
+          "file": "functions/heading.jinja"
+        }
+      ]
+    }
+  ]
+}
