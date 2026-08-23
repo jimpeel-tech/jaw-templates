@@ -1,0 +1,69 @@
+{
+  "format_version": 1,
+  "repo_version": "0.1.0",
+  "id": "workspace-ripple-test",
+  "name": "Workspace Ripple Test",
+  "description": "Development-only Template → Sections → Functions document with inline test comments for document-scoped workspace, staging ripple-down, and shared Global resource behavior.",
+  "output_pattern": "{{ user.full_name }} - Workspace Ripple Test.pdf",
+  "template": {
+    "name": "Workspace Ripple Test Template",
+    "file": "template.jinja"
+  },
+  "sections": [
+    {
+      "name": "Identity",
+      "symbol": "identity",
+      "file": "sections/identity.jinja",
+      "settings": {
+        "content_shape": "paragraphs"
+      },
+      "functions": [
+        {
+          "name": "Display Name",
+          "symbol": "display_name",
+          "file": "functions/display_name.jinja"
+        },
+        {
+          "name": "Date Line",
+          "symbol": "date_line",
+          "file": "functions/date_line.jinja"
+        }
+      ]
+    },
+    {
+      "name": "Experience",
+      "symbol": "experience",
+      "file": "sections/experience.jinja",
+      "settings": {
+        "content_shape": "paragraphs"
+      },
+      "functions": [
+        {
+          "name": "Experience Line",
+          "symbol": "experience_line",
+          "file": "functions/experience_line.jinja"
+        },
+        {
+          "name": "Skills Line",
+          "symbol": "skills_line",
+          "file": "functions/skills_line.jinja"
+        }
+      ]
+    },
+    {
+      "name": "Closing",
+      "symbol": "closing",
+      "file": "sections/closing.jinja",
+      "settings": {
+        "content_shape": "paragraphs"
+      },
+      "functions": [
+        {
+          "name": "Signoff",
+          "symbol": "signoff",
+          "file": "functions/signoff.jinja"
+        }
+      ]
+    }
+  ]
+}
