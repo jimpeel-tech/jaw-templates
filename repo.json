@@ -6,6 +6,10 @@
     {
       "id": "basic-document",
       "path": "templates/basic-document"
+    },
+    {
+      "id": "workspace-ripple-test",
+      "path": "templates/workspace-ripple-test"
     }
   ]
 }
