@@ -8,6 +8,10 @@
       "path": "templates/basic-document"
     },
     {
+      "id": "document-tour",
+      "path": "templates/document-tour"
+    },
+    {
       "id": "workspace-ripple-test",
       "path": "templates/workspace-ripple-test"
     }
