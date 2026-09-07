@@ -1,0 +1,15 @@
+{#
+SECTION: concepts
+
+This Section uses Content Shape = List.
+Each non-empty line beginning with "- " becomes one list item when the Template
+iterates over the Section.
+#}
+
+- Document: the top-level generation unit, including its output filename and routing.
+- Template: presentation and composition code, normally LaTeX plus Jinja, that references Sections.
+- Section: document-facing content; it may be Paragraphs or a List and may generate content directly.
+- Function: an optional leaf helper extracted from a Section for organization or reuse.
+- JAW Objects: structured runtime values such as user, job_ref, work_exp, cap, and system.
+- Symbol: the readable code-facing reference used in source, such as welcome or target_summary.
+- JID: JAW's durable internal identity for a resource or relationship; portable packages do not store JIDs.

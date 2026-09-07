@@ -1,11 +1,19 @@
 {
   "repo_version": "0.1.0",
   "format_version": 1,
-  "minimum_apex_version": "0.1.0",
+  "minimum_jaw_version": "0.1.0",
   "templates": [
     {
       "id": "basic-document",
       "path": "templates/basic-document"
+    },
+    {
+      "id": "document-tour",
+      "path": "templates/document-tour"
+    },
+    {
+      "id": "workspace-ripple-test",
+      "path": "templates/workspace-ripple-test"
     }
   ]
 }
