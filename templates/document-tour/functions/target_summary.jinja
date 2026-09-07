@@ -1,0 +1,21 @@
+{#
+FUNCTION: target_summary
+
+Functions are optional leaf helpers used by Sections. They can use Jinja and JAW
+Objects, but presentation-level LaTeX belongs in the Template.
+
+This Function demonstrates Jinja variables and conditionals without making an AI
+call.
+#}
+
+{% set company = job_ref.company | default('', true) %}
+{% set title = job_ref.title | default('', true) %}
+{% if company and title %}
+Current Tracker target: {{ title }} at {{ company }}.
+{% elif title %}
+Current Tracker role: {{ title }}.
+{% elif company %}
+Current Tracker company: {{ company }}.
+{% else %}
+No tracked job is attached to this preview yet.
+{% endif %}
