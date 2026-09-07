@@ -1,0 +1,43 @@
+{
+  "format_version": 1,
+  "repo_version": "0.1.0",
+  "id": "document-tour",
+  "name": "Document Tour",
+  "description": "Guided, deterministic tour of JAW Documents: Template, Sections, Functions, JAW Objects, Jinja, content shapes, symbols, and JIDs. Makes no AI calls.",
+  "output_pattern": "{{ user.full_name }} - JAW Document Tour.pdf",
+  "template": {
+    "name": "Document Tour Template",
+    "file": "template.jinja"
+  },
+  "sections": [
+    {
+      "symbol": "welcome",
+      "file": "sections/welcome.jinja",
+      "settings": {
+        "content_shape": "paragraphs"
+      },
+      "functions": [
+        {
+          "symbol": "target_summary",
+          "file": "functions/target_summary.jinja"
+        }
+      ]
+    },
+    {
+      "symbol": "concepts",
+      "file": "sections/concepts.jinja",
+      "settings": {
+        "content_shape": "list"
+      },
+      "functions": []
+    },
+    {
+      "symbol": "next_steps",
+      "file": "sections/next_steps.jinja",
+      "settings": {
+        "content_shape": "list"
+      },
+      "functions": []
+    }
+  ]
+}
