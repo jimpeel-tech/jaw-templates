@@ -1,0 +1,81 @@
+{#
+JAW DOCUMENT TOUR — TEMPLATE
+
+A Template owns presentation and composition.
+
+This file demonstrates:
+- ordinary LaTeX;
+- Jinja variables and control flow;
+- direct JAW Object access;
+- Section references;
+- iterating List-shaped Sections.
+
+Important boundary:
+- Keep presentation LaTeX in the Template.
+- Sections and Functions return document content.
+- JAW escapes inserted content at the final LaTeX boundary.
+#}
+
+{% set target_company = job_ref.company | default('', true) %}
+{% set target_title = job_ref.title | default('', true) %}
+
+\documentclass[10pt,letterpaper]{article}
+\usepackage[letterpaper,margin=0.78in]{geometry}
+\usepackage{xcolor}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+
+\definecolor{JawBlue}{HTML}{364C60}
+
+\begin{document}
+
+{# Direct JAW Objects may be used in a Template. #}
+{\Large\bfseries\color{JawBlue} JAW Document Tour}
+
+A small document you can inspect in the Workbench to learn how the pieces fit together.
+
+\textbf{Generated for:} {{ user.full_name }}\\
+\textbf{Date:} {{ system.current_date }}\\
+\textbf{Tracker company:} {{ target_company | default('(none)', true) }}\\
+\textbf{Tracker role:} {{ target_title | default('(none)', true) }}
+
+\vspace{0.08in}
+\hrule
+\vspace{0.12in}
+
+\section*{1. Template to Section to Function}
+
+{# "welcome" is a Section reference. Open it from Explorer or Ctrl+Click. #}
+{{ welcome }}
+
+\section*{2. List-shaped Section}
+
+The Template can iterate a Section whose Content Shape is \textbf{List}:
+
+\begin{itemize}
+{% for item in concepts %}
+  \item {{ item }}
+{% endfor %}
+\end{itemize}
+
+\section*{3. What the Template is doing}
+
+The LaTeX commands you see in this PDF live here in the Template. The text supplied by Sections and Functions stays content. This keeps formatting separate from reusable or generated content and lets JAW safely escape inserted values.
+
+The readable names in source, such as \texttt{welcome}, \texttt{concepts}, and \texttt{target\_summary}, are symbols. JAW creates and tracks the underlying resource and reference JIDs internally; portable template packages do not contain those JIDs.
+
+\section*{4. Try these next}
+
+{# "next_steps" is another List-shaped Section. #}
+\begin{enumerate}
+{% for step in next_steps %}
+  \item {{ step }}
+{% endfor %}
+\end{enumerate}
+
+\section*{5. AI generation}
+
+Sections and Functions can also contain JAW generation blocks. This tour intentionally does not run one, so it renders immediately without requiring an AI provider. After you understand this graph, generation is the next feature to try. Templates remain responsible for presentation; generation belongs in Sections or Functions.
+
+\end{document}
