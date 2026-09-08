@@ -1,0 +1,31 @@
+name: Validate and retag templates
+
+on:
+  push:
+    branches:
+      - tmp-template-validation
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Install validator dependencies
+        run: python -m pip install jinja2 jsonschema
+      - name: Validate template repository
+        run: python .github/scripts/validate_templates.py
+      - name: Point v0.1.0 at validated main
+        run: |
+          git fetch origin main
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git tag -fa v0.1.0 origin/main -m 'JAW templates v0.1.0'
+          git push --force origin v0.1.0
