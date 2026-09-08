@@ -12,8 +12,12 @@
       "path": "templates/document-tour"
     },
     {
-      "id": "workspace-ripple-test",
-      "path": "templates/workspace-ripple-test"
+      "id": "jaw-object-examples",
+      "path": "templates/jaw-object-examples"
+    },
+    {
+      "id": "cover-letter",
+      "path": "templates/cover-letter"
     }
   ]
 }

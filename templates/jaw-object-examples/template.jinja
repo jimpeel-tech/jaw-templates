@@ -1,0 +1,94 @@
+{#
+JAW OBJECT EXAMPLES
+
+Use this template as a reference while authoring Documents. It renders without
+an AI provider and demonstrates every supported JAW runtime root.
+#}
+\documentclass[10pt,letterpaper]{article}
+\usepackage[letterpaper,margin=0.75in]{geometry}
+\usepackage{xcolor}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\definecolor{JawBlue}{HTML}{364C60}
+
+\begin{document}
+{\LARGE\bfseries\color{JawBlue} JAW Object Examples}
+
+\textbf{Generated:} {{ system.current_date }}\\
+\textbf{Year:} {{ system.current_year }}
+
+\section*{user}
+The \texttt{user} object contains the active JAW profile.
+
+\textbf{Name:} {{ user.full_name | default('(not set)', true) }}\\
+\textbf{Email:} {{ user.email | default('(not set)', true) }}\\
+\textbf{Phone:} {{ user.phone_number | default('(not set)', true) }}\\
+\textbf{LinkedIn:} {{ user.linkedin | default('(not set)', true) }}\\
+\textbf{Portfolio:} {{ user.portfolio | default('(not set)', true) }}
+
+\section*{job\_ref}
+The \texttt{job\_ref} object comes from the current Generation Context.
+
+\textbf{Company:} {{ job_ref.company | default('(none)', true) }}\\
+\textbf{Role:} {{ job_ref.title | default('(none)', true) }}\\
+\textbf{Match score:} {{ job_ref.score | default('(not analyzed)', true) }}
+
+{% if job_ref.summary %}
+\textbf{Summary:} {{ job_ref.summary }}
+{% endif %}
+
+{% if job_ref.strong_matches %}
+\textbf{Strong matches:}
+\begin{itemize}
+{% for item in job_ref.strong_matches %}
+  \item {{ item }}
+{% endfor %}
+\end{itemize}
+{% endif %}
+
+\section*{work\_exp}
+\texttt{work\_exp} is a list of enabled Work Experience records.
+
+{% if work_exp %}
+\begin{itemize}
+{% for item in work_exp %}
+  \item \textbf{ {{ item.title | default('Role', true) }} } at {{ item.company | default('Company', true) }}{% if item.start or item.end %} --- {{ item.start | default('', true) }} to {{ item.end | default('Present', true) }}{% endif %}
+{% endfor %}
+\end{itemize}
+{% else %}
+No Work Experience records are enabled.
+{% endif %}
+
+\section*{cap}
+\texttt{cap.all} contains capabilities enabled for Documents. User-managed
+Capability Sets are available under \texttt{cap.sets} using normalized set names.
+
+\textbf{Visible capabilities:} {{ cap.all | length }}
+
+{% if cap.all %}
+\begin{itemize}
+{% for item in cap.all[:10] %}
+  \item {{ item.name }}{% if item.rating is defined %} --- rating {{ item.rating }}/5{% endif %}
+{% endfor %}
+\end{itemize}
+{% endif %}
+
+\section*{system and helpers}
+\texttt{system} supplies runtime values such as \texttt{current\_date} and
+\texttt{current\_year}. JAW also exposes authoring helpers. For example:
+
+{% raw %}
+\begin{verbatim}
+{{ describe() }}
+{{ describe(job_ref) }}
+{{ dump(job_ref) }}
+{{ csv(items) }}
+\end{verbatim}
+{% endraw %}
+
+These helper calls are shown as source examples rather than executed so the PDF
+stays compact. Remove the raw/verbatim wrapper in your own Template or Section
+to inspect runtime values while authoring.
+
+\end{document}

@@ -1,0 +1,49 @@
+{#
+JAW COVER LETTER TEMPLATE
+
+The Template owns presentation. The greeting, body, and signoff are Sections.
+The body Section uses a JAW generation block and therefore requires the active
+user's configured Ollama or OpenAI provider.
+#}
+{% set linkedin = user.linkedin | default('', true) %}
+{% set portfolio = user.portfolio | default('', true) %}
+
+\documentclass[10pt,letterpaper]{article}
+\usepackage[letterpaper,margin=0.82in]{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{ragged2e}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\definecolor{JawBlue}{HTML}{364C60}
+\hypersetup{colorlinks=true,urlcolor=JawBlue}
+
+\begin{document}
+
+{\LARGE\bfseries\color{JawBlue} {{ user.full_name | default('Your Name', true) }}}\\[0.08in]
+{% if user.email %}{{ user.email }}{% endif %}
+{% if user.phone_number %}\quad {{ user.phone_number }}{% endif %}
+{% if linkedin %}\quad \href{ {{ linkedin }} }{LinkedIn}{% endif %}
+{% if portfolio %}\quad \href{ {{ portfolio }} }{Portfolio}{% endif %}
+
+\vspace{0.18in}
+\hrule
+\vspace{0.18in}
+
+{{ system.current_date }}\\[0.12in]
+
+\textbf{ {{ job_ref.title | default('Position', true) }} }\\
+{{ job_ref.company | default('Company', true) }}\\[0.18in]
+
+{{ greeting }}
+
+\vspace{0.10in}
+{% for paragraph in body %}
+\justifying {{ paragraph }}\par\vspace{0.13in}
+{% endfor %}
+
+{{ signoff }}\\[0.12in]
+{{ user.full_name | default('Your Name', true) }}
+
+\end{document}

@@ -1,0 +1,16 @@
+<cover_body:list>
+Write exactly three concise cover-letter body paragraphs for the {{ job_ref.title }} role at {{ job_ref.company }}.
+
+Use only evidence supplied by JAW from {{ user }}, {{ work_exp }}, {{ cap }}, and {{ job_ref }}. Do not invent experience, metrics, certifications, technologies, employers, or job requirements.
+
+Paragraph 1: explain the candidate's interest and strongest overall fit.
+Paragraph 2: connect the most relevant demonstrated experience and capabilities to the role.
+Paragraph 3: close with the value the candidate could bring and interest in a conversation.
+
+Keep the tone professional and natural. Do not add a greeting, signoff, heading, bullets, or markdown.
+</>
+
+{% for paragraph in cover_body %}
+{{ paragraph }}
+
+{% endfor %}
