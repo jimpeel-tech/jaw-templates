@@ -1,49 +1,326 @@
-{#
-JAW COVER LETTER TEMPLATE
-
-The Template owns presentation. The greeting, body, and signoff are Sections.
-The body Section uses a JAW generation block and therefore requires the active
-user's configured Ollama or OpenAI provider.
-#}
-{% set linkedin = user.linkedin | default('', true) %}
-{% set portfolio = user.portfolio | default('', true) %}
+% cover_letter.tex.j2
+% Tectonic/XeTeX + Jinja2 cover-letter Template for JAW
+%
+% JAW context:
+%   user.full_name
+%   user.phone_number
+%   user.email
+%   user.linkedin
+%   user.portfolio
+%
+%   job.title
+%   job.company
+%
+%   system.current_date
+%
+% Workbench Section:
+%   body
+%
+% `body` should use Content Shape = Paragraphs.
+% Each paragraph is rendered independently through \CoverParagraph.
+%
+% Normal JAW values are escaped automatically at the final
+% LaTeX rendering boundary. Use latex_raw(...) only for explicitly
+% trusted LaTeX content.
 
 \documentclass[10pt,letterpaper]{article}
-\usepackage[letterpaper,margin=0.82in]{geometry}
+
+\usepackage[
+  letterpaper,
+  left=2.52in,
+  right=0.48in,
+  top=1.84in,
+  bottom=0.28in
+]{geometry}
+
+\usepackage{fontspec}
 \usepackage{xcolor}
-\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{fontawesome5}
 \usepackage{ragged2e}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+
 \pagestyle{empty}
+
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
-\definecolor{JawBlue}{HTML}{364C60}
-\hypersetup{colorlinks=true,urlcolor=JawBlue}
+\setlength{\emergencystretch}{3em}
+
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\tolerance=1800
+
+
+% =====================================================================
+% Colors
+% =====================================================================
+
+\definecolor{BrandBlue}{HTML}{364C60}
+\definecolor{HeaderBlue}{HTML}{8DB3E2}
+\definecolor{BodyGray}{HTML}{404040}
+\definecolor{RuleGray}{HTML}{D0D0D0}
+\definecolor{SignatureGray}{HTML}{595959}
+
+
+% =====================================================================
+% Fonts
+% =====================================================================
+
+% Main body font
+\setmainfont{OpenSans-Regular.ttf}[
+  BoldFont = OpenSans-Bold.ttf,
+  ItalicFont = OpenSans-Italic.ttf,
+  BoldItalicFont = OpenSans-BoldItalic.ttf,
+  Numbers = {Lining, Proportional}
+]
+
+% Header font
+\newfontfamily\headerfont{Montserrat-Light.ttf}
+
+% Signature font
+\newfontfamily\signaturefont{QwitcherGrypen-Bold.ttf}
+
+% =====================================================================
+% Hyperlinks
+% =====================================================================
+
+\hypersetup{
+  hidelinks
+}
+
+
+% =====================================================================
+% Body typography
+% =====================================================================
+
+\newcommand{\bodyfont}{
+  \fontsize{10.35pt}{14.75pt}
+  \selectfont
+  \color{black}
+}
+
+\newcommand{\CoverParagraph}[1]{
+  \par
+  \begingroup
+  \justifying
+  \setlength{\parindent}{0pt}
+  \bodyfont
+  #1
+  \par
+  \endgroup
+  \vspace{0.145in}
+}
+
+
+% =====================================================================
+% Sidebar
+% =====================================================================
+
+{% raw %}
+
+% Plain contact row
+\newcommand{\SidebarContact}[3]{
+  \node[
+    circle,
+    fill=BrandBlue,
+    minimum size=0.255in,
+    inner sep=0pt,
+    text=white
+  ]
+    at ([xshift=0.285in,yshift=#1]current page.north west)
+    {
+      \fontsize{8.3pt}{8.3pt}\selectfont #2
+    };
+
+  \node[
+    anchor=west,
+    text=BodyGray
+  ]
+    at ([xshift=0.515in,yshift=#1]current page.north west)
+    {
+      \fontsize{9.6pt}{11pt}\selectfont #3
+    };
+}
+
+
+% Contact row with clickable icon only
+\newcommand{\SidebarContactLink}[4]{
+  \node[
+    circle,
+    fill=BrandBlue,
+    minimum size=0.255in,
+    inner sep=0pt,
+    text=white
+  ]
+    at ([xshift=0.285in,yshift=#1]current page.north west)
+    {
+      \href{#4}{
+        \makebox[0.17in][c]{
+          \fontsize{8.3pt}{8.3pt}\selectfont #2
+        }
+      }
+    };
+
+  \node[
+    anchor=west,
+    text=BodyGray
+  ]
+    at ([xshift=0.515in,yshift=#1]current page.north west)
+    {
+      \fontsize{9.6pt}{11pt}\selectfont #3
+    };
+}
+
+{% endraw %}
 
 \begin{document}
 
-{\LARGE\bfseries\color{JawBlue} {{ user.full_name | default('Your Name', true) }}}\\[0.08in]
-{% if user.email %}{{ user.email }}{% endif %}
-{% if user.phone_number %}\quad {{ user.phone_number }}{% endif %}
-{% if linkedin %}\quad \href{ {{ linkedin }} }{LinkedIn}{% endif %}
-{% if portfolio %}\quad \href{ {{ portfolio }} }{Portfolio}{% endif %}
 
-\vspace{0.18in}
-\hrule
-\vspace{0.18in}
+% =====================================================================
+% Fixed visual frame
+% =====================================================================
 
-{{ system.current_date }}\\[0.12in]
+\begin{tikzpicture}[remember picture,overlay]
 
-\textbf{ {{ job_ref.title | default('Position', true) }} }\\
-{{ job_ref.company | default('Company', true) }}\\[0.18in]
+  % Header
+  \fill[BrandBlue]
+    (current page.north west)
+    rectangle
+    ([yshift=-1.48in]current page.north east);
 
-{{ greeting }}
+  % Footer
+  \fill[BrandBlue]
+    (current page.south west)
+    rectangle
+    ([yshift=0.11in]current page.south east);
 
-\vspace{0.10in}
+
+  % Candidate name
+  \node[
+    anchor=north,
+    text=HeaderBlue,
+    align=center
+  ]
+    at ([yshift=-0.225in]current page.north)
+    {
+      \headerfont
+      \fontsize{36pt}{39pt}
+      \selectfont
+      \addfontfeatures{LetterSpace=7}
+      \MakeUppercase{
+        {{ user.full_name }}
+      }
+    };
+
+
+  % Target position
+  \node[
+    anchor=north,
+    text=HeaderBlue,
+    align=center,
+    text width=7.8in
+  ]
+    at ([yshift=-0.88in]current page.north)
+    {
+      \headerfont
+      \fontsize{12pt}{14pt}
+      \selectfont
+      \addfontfeatures{LetterSpace=17}
+      \spaceskip=0.50em
+      \MakeUppercase{
+        {{ job_ref.title }}
+      }
+    };
+
+
+  % Sidebar divider
+  \draw[
+    RuleGray,
+    line width=0.55pt
+  ]
+    ([xshift=2.28in,yshift=-1.67in]current page.north west)
+    --
+    ([xshift=2.28in,yshift=0.24in]current page.south west);
+
+
+  % Contact information
+  \SidebarContact{-2.76in}
+    {\faMobile}
+    { {{ user.phone_number }} }
+  
+  \SidebarContactLink{-3.10in}
+    {\faEnvelope}
+    { {{ user.email }} }
+    {mailto:{{ user.email }}}
+  
+  \SidebarContactLink{-3.44in}
+    {\faBriefcase}
+    { {{ user.linkedin | replace('https://www.', '') }} }
+    { {{- user.linkedin }} }
+  
+  \SidebarContactLink{-3.78in}
+    {\faHome}
+    { {{ user.portfolio }} }
+    { {{- user.portfolio }} }
+
+\end{tikzpicture}
+
+
+% =====================================================================
+% Letter body
+% =====================================================================
+
+\bodyfont
+
+
+% Date
+\noindent
+\hfill
+{{ system.current_date }}
+
+\par
+\vspace{0.085in}
+
+
+% Greeting
+\CoverParagraph{
+  {{ greeting }}
+}
+
+
+% =====================================================================
+% Cover-letter body
+% =====================================================================
+
 {% for paragraph in body %}
-\justifying {{ paragraph }}\par\vspace{0.13in}
+\CoverParagraph{
+  {{ paragraph }}
+}
 {% endfor %}
 
-{{ signoff }}\\[0.12in]
-{{ user.full_name | default('Your Name', true) }}
+
+% =====================================================================
+% Signature
+% =====================================================================
+
+\vspace{-0.055in}
+
+\noindent
+\bodyfont
+{{ signoff }},
+
+\par
+\vspace{0.035in}
+
+\hspace*{0.16in}{
+  \signaturefont
+  \fontsize{26pt}{26pt}
+  \selectfont
+  \color{SignatureGray}
+  {{ user.full_name }}
+}
+
 
 \end{document}

@@ -1,15 +1,16 @@
 {
   "format_version": 1,
   "repo_version": "0.1.0",
-  "id": "cover-letter",
-  "name": "Cover Letter",
+  "id": "cover-letter-fancy",
+  "name": "Cover Letter - Fancy",
   "description": "Job-aware cover letter with deterministic greeting/signoff and AI-generated body paragraphs using the active JAW provider and Generation Context.",
   "output_pattern": "{{ user.full_name }} - {{ job_ref.company }} - Cover Letter.pdf",
   "template": {
-    "name": "Cover Letter Template",
+    "name": "Cover Letter Template - Fancy",
     "file": "template.jinja"
   },
   "sections": [
+ 
     {
       "symbol": "greeting",
       "file": "sections/greeting.jinja",
@@ -19,13 +20,15 @@
     {
       "symbol": "body",
       "file": "sections/body.jinja",
-      "settings": {"content_shape": "paragraphs"},
+      "settings": {
+        "content_shape": "paragraphs"},
       "functions": []
     },
     {
       "symbol": "signoff",
       "file": "sections/signoff.jinja",
-      "settings": {"content_shape": "paragraphs"},
+      "settings": {
+        "content_shape": "paragraphs"},
       "functions": []
     }
   ]
