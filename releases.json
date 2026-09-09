@@ -1,0 +1,12 @@
+{
+  "registry_format": 1,
+  "releases": [
+    {
+      "version": "0.1.0",
+      "ref": "v0.1.0",
+      "template_api": 1,
+      "package_format": 1,
+      "jaw": ">=0.1.0,<0.2.0"
+    }
+  ]
+}
