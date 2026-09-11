@@ -1,6 +1,6 @@
 {
   "format_version": 1,
-  "repo_version": "0.1.0",
+  "repo_version": "0.1.1",
   "id": "cover-letter-ai",
   "name": "Cover Letter - AI",
   "description": "Job-aware cover letter with deterministic greeting/signoff and AI-generated body paragraphs using the active JAW provider and Generation Context.",
