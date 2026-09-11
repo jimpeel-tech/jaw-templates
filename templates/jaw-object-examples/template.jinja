@@ -48,12 +48,20 @@ The \texttt{job\_ref} object comes from the current Generation Context.
 {% endif %}
 
 \section*{work\_exp}
-\texttt{work\_exp} is a list of enabled Work Experience records.
+\texttt{work\_exp} is a list of enabled Work Experience records. Each record's
+\texttt{highlights} field is a list of strings and can be iterated directly.
 
 {% if work_exp %}
 \begin{itemize}
 {% for item in work_exp %}
   \item \textbf{ {{ item.title | default('Role', true) }} } at {{ item.company | default('Company', true) }}{% if item.start or item.end %} --- {{ item.start | default('', true) }} to {{ item.end | default('Present', true) }}{% endif %}
+  {% if item.highlights %}
+  \begin{itemize}
+  {% for highlight in item.highlights %}
+    \item {{ highlight }}
+  {% endfor %}
+  \end{itemize}
+  {% endif %}
 {% endfor %}
 \end{itemize}
 {% else %}
