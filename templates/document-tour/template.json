@@ -1,6 +1,6 @@
 {
   "format_version": 1,
-  "repo_version": "0.1.0",
+  "repo_version": "0.1.1",
   "id": "document-tour",
   "name": "Document Tour",
   "description": "Guided, deterministic tour of JAW Documents: Template, Sections, Functions, JAW Objects, Jinja, content shapes, symbols, and JIDs. Makes no AI calls.",
