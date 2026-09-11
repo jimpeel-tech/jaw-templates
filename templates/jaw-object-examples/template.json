@@ -1,6 +1,6 @@
 {
   "format_version": 1,
-  "repo_version": "0.1.0",
+  "repo_version": "0.1.1",
   "id": "jaw-object-examples",
   "name": "JAW Object Examples",
   "description": "Deterministic reference template showing the user, job_ref, work_exp, cap, and system runtime objects. Makes no AI calls.",
