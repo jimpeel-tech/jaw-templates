@@ -31,10 +31,12 @@ Each package contains `template.json`, a Template source file, and optional Sect
 
 JAW and this repository use separate version numbers and compatibility contracts:
 
-- **JAW version** — application release, for example `0.1.0`.
+- **JAW version** — application release, for example `0.1.1`.
 - **Repository version** — content release for this repository, for example `0.1.1`.
 - **Template API** — runtime contract exposed to templates. Bump this when a JAW change is not backward compatible with existing template behavior, such as removing or changing JAW Objects, helpers, generation-block syntax, or rendering semantics.
 - **Package format** — structure of `repo.json`, `template.json`, and packaged resources. Bump this only when the package/file format itself changes incompatibly.
+
+The `0.1.1` repository source targets Template API 2 because the current Documents runtime consistently exposes `work_exp[*].highlights` as `list[str]`. JAW `0.1.1` supports both Template API 1 and 2 so the immutable `0.1.0` repository release remains compatible.
 
 A repository content update can therefore ship without requiring a JAW code release as long as its Template API, package format, and JAW compatibility range remain compatible.
 
@@ -42,7 +44,9 @@ A repository content update can therefore ship without requiring a JAW code rele
 
 `releases.json` is the release channel registry. JAW reads it and chooses the newest release compatible with the running JAW version, its supported Template APIs, and its supported package format.
 
-Example:
+The registry contains only published immutable tags. During release preparation, `repo.json` on `main` may describe the next repository version before a corresponding entry exists in `releases.json`.
+
+Current published-registry shape:
 
 ```json
 {
