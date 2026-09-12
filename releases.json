@@ -7,6 +7,13 @@
       "template_api": 1,
       "package_format": 1,
       "jaw": ">=0.1.0,<0.2.0"
+    },
+    {
+      "version": "0.1.1",
+      "ref": "v0.1.1",
+      "template_api": 2,
+      "package_format": 1,
+      "jaw": ">=0.1.1,<0.2.0"
     }
   ]
 }
